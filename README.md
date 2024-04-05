@@ -16,7 +16,7 @@ This hands-on lab aims to introduce you to the basics of cloud computing by depl
 
 The following image schematically represents the structure of the Virtual Private Cloud configuration as determined by the instructor.
 
-![](/hol02/images/image002.png)
+![]([/hol02/images/image002.png](https://github.com/samuleal/hol02/blob/main/images/image002.png))
 
 _Figure 1. Target VPC configuration according to instructor guidelines._
 
