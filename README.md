@@ -1,8 +1,7 @@
 # HOL 02: Deploying A Hybrid Infrastructure For Researchers In AWS
-### HandsOn Labs on Cloud Computing and Big Data for BioMed
-### Samuel Leal Rodríguez
-### High-Performance And Distributed Computing For Big Data 2023 - 2024
-
+HandsOn Labs on Cloud Computing and Big Data for BioMed
+Samuel Leal Rodríguez
+High-Performance And Distributed Computing For Big Data 2023 - 2024
 
 ## Introduction
 
@@ -15,7 +14,6 @@ This hands-on lab aims to introduce you to the basics of cloud computing by depl
 ## Infrastructure Setup
 
 The following image schematically represents the structure of the Virtual Private Cloud configuration as determined by the instructor.
-
 
 ![](https://github.com/samuleal/hol02/blob/main/images/image002.png?raw=true)
 
@@ -172,6 +170,7 @@ The cron package is not installed by default in this Linux distribution, so an a
 
 In the case of the Research Instance, which has to upload the files to the S3 bucket once they are created, I made a .timer file at/etc/systemd/system/s3-sync.timer. This sets up a timer that performs the task every hour. This can be set to every half an hour, every five minutes or other time interval that better suits the user.
 
+```
 [Unit]
 
 Description=Sync S3 Bucket to Local Folder
@@ -183,9 +182,11 @@ OnCalendar=\*-\*-\* \*:00:00
 [Install]
 
 WantedBy=timers.target
+```
 
 Then I created a Systemd Service Unit File (with a .service extension) to define the synchronization command.
 
+```
 [Unit]
 
 Description=Sync S3 Bucket to Local Folder
@@ -195,6 +196,7 @@ Description=Sync S3 Bucket to Local Folder
 Type=oneshot
 
 ExecStart=/usr/bin/aws s3 sync /home/ec2-user/notebooks s3://hol02-notebooks-sam
+```
 
 Finally, I enabled and started the timer. The snapshot shows that the timer is enabled and waiting for the next trigger (hour).
 
@@ -204,6 +206,7 @@ _Figure 19. S3 syncing on the Research EC2 instance. Syncing was achieved config
 
 I have a problem, however, with this approach. Remote transfer requires login credentials, that's why the service file had to be slightly modified to add the login details of AWS CLI. This is the resulting .service file:
 
+```
 [Unit]
 
 Description=AWS IAM user Backup
@@ -219,7 +222,7 @@ Environment=AWS\_SESSION\_TOKEN=\<session-token\>
 Type=oneshot
 
 ExecStart=/usr/bin/aws s3 sync /home/ec2-user/notebooks/ s3://hol02-notebooks-sam
-
+```
 I changed the timer setting to execute the command every five minutes for developing purposes (checking if it works is faster).
 
 The order of the source and destination paths in the aws s3 sync command can indeed affect the behavior of the synchronization. The first path is the source path, indicating the local directory or S3 bucket/prefix from which files should be copied. The second path is the destination path, indicating the local directory or S3 bucket/prefix to which files should be copied. This way, in the Research Instance we are pushing the files, and in the Voila Instance we are pulling or retrieving the files. This is why to sync from the bucket to the Voila instance, the same steps were taken and only the _ExecStart_ line of the service file was modified by reversing the paths ordering.
