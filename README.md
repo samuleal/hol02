@@ -95,7 +95,7 @@ _Figure 10. Jupyter Notebook on the Research EC2 instance. Mind the connection w
 
 The installation of the Voila server is straightforward. The welcome screen is shown in the screenshot.
 
-![](https://github.com/samuleal/hol02/blob/main/images/image014.png?raw=true)
+![](https://github.com/samuleal/hol02/blob/main/images/image014.jpg?raw=true)
 
 _Figure 11. Nginx welcome screen after installation. Access is granted if one directly uses de IP._
 
