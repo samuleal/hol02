@@ -59,7 +59,7 @@ _Figure 5. My buckets._
 
 Installing OpenVPN is easy through the command line. This subnet is easy to connect due to the flexibility of its security group.
 
-![](https://github.com/samuleal/hol02/blob/main/images/image009.png?raw=true)
+![](https://github.com/samuleal/hol02/blob/main/images/image009.jpg?raw=true)
 
 _Figure 6. After the installation, the output provides you with the user and password to set up OpenVPN._
 
