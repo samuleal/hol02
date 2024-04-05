@@ -23,13 +23,13 @@ _Figure 1. Target VPC configuration according to instructor guidelines._
 
 The first step that I took in the task was the creation of the VPC. In Figure 2 a quick depiction of the VPC structure is shown. As you can see, there are three different subnets, each of them connected to a different routing table. There is only one internet gateway granting access only to the Production and the DMZ subnets. The HOL02-Research subnet does not have access to the internet. Nonetheless, it is important for it to have a routing table, as it is needed to grant it access to the S3 bucket as we will discuss later.
 
-![](RackMultipart20240405-1-b4fxau_html_3b20470db4ef1cc0.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image003.png?raw=true)
 
 _Figure 2. Overview of the created VPC. There are 3 subnets connected to 3 different routing tables. Only one internet gateway was created and one endpoint gateway to the S3 bucket was used to connect with the Research subnet._
 
 This configuration is achieved by first creating the subnet associations (i.e. associate each routing table to a specific subnet) and then adding the routes (e.g. the internet gateway). The following image shows an example of the DMZ Subnet configuration.
 
-![](RackMultipart20240405-1-b4fxau_html_47a350bf75d242cd.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image004.png?raw=true)
 
 _Figure 3. DMZ Subnet Routing configuration. The route to the internet gateway was manually added._
 
@@ -51,7 +51,7 @@ _Figure 4. Summary of security groups for each of the instances according to the
 
 The creation of the bucket is straightforward and most of the fields are left as default. This screenshot shows the bucket with a unique name (hol02-notebooks-sam).
 
-![](RackMultipart20240405-1-b4fxau_html_fe453e2912ab1cab.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image008.png?raw=true)
 
 _Figure 5. My buckets._
 
