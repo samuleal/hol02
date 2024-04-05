@@ -1,57 +1,22 @@
 # HOL 02: Deploying A Hybrid Infrastructure For Researchers In AWS
-HandsOn Labs on Cloud Computing and Big Data for BioMed
-Samuel Leal Rodríguez
-High-Performance And Distributed Computing For Big Data 2023 - 2024
+### HandsOn Labs on Cloud Computing and Big Data for BioMed
+### Samuel Leal Rodríguez
+### High-Performance And Distributed Computing For Big Data 2023 - 2024
 
-**Table of Contents**
 
-[Introduction]
-
-[Objectives]
-
-[Infrastructure Setup]
-
-[Security groups]
-
-[Creation of the S3 bucket]
-
-[OpenVPN Configuration]
-
-[Setting up the Research EC2 instance]
-
-[Setting up the Production instance]
-
-[Syncing 
-
-[Troubleshooting]
-
-[Google Chrome incompatibility issues with Vocareum]
-
-[Installing applications on the Research EC2 instance]
-
-[Access to the S3 bucket from the Research EC2 instance]
-
-[Amazon Linux 2023 does not support cron]
-
-[The elastic IP changes when the AWS session is closed]
-
-[OpenVPN access]
-
-[Installing cronie as an alternative to cron]
-
-# Introduction
+## Introduction
 
 Jupyter Notebooks have become an essential tool for analyzing data and disseminating findings in data science. This hands-on lab guides you through setting up a private Jupyter Notebook server on AWS for your research team. Furthermore, we will deploy a public Nginx web server using Voila to share your team's findings with the public.
 
-# Objectives
+## Objectives
 
 This hands-on lab aims to introduce you to the basics of cloud computing by deploying a hybrid infrastructure for researchers in AWS. The infrastructure will include a private Jupyter Notebook server accessible via VPN and a public Voila server accessible from the Internet.
 
-# Infrastructure Setup
+## Infrastructure Setup
 
 The following image schematically represents the structure of the Virtual Private Cloud configuration as determined by the instructor.
 
-![](hol02/images/)
+![](hol02/images/image002.png)
 
 _Figure 1. Target VPC configuration according to instructor guidelines._
 
