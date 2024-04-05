@@ -33,7 +33,7 @@ This configuration is achieved by first creating the subnet associations (i.e. a
 
 _Figure 3. DMZ Subnet Routing configuration. The route to the internet gateway was manually added._
 
-# Security groups
+## Security groups
 
 I created the security groups at the same time when I created the EC2 instances. This caused me some trouble (see [Troubleshooting](#Troubleshooting)), mostly for the subnet which was disconnected from the internet (HOL02-Research).
 
@@ -47,7 +47,7 @@ In the next table a summary of the security groups, the ports and the sources ac
 
 _Figure 4. Summary of security groups for each of the instances according to the configuration given by the instructor._
 
-# Creation of the S3 bucket
+## Creation of the S3 bucket
 
 The creation of the bucket is straightforward and most of the fields are left as default. This screenshot shows the bucket with a unique name (hol02-notebooks-sam).
 
@@ -55,17 +55,17 @@ The creation of the bucket is straightforward and most of the fields are left as
 
 _Figure 5. My buckets._
 
-# OpenVPN Configuration
+## OpenVPN Configuration
 
 Installing OpenVPN is easy through the command line. This subnet is easy to connect due to the flexibility of its security group.
 
-![](RackMultipart20240405-1-b4fxau_html_9e45d86c253b2f52.jpg)
+![](https://github.com/samuleal/hol02/blob/main/images/image009.png?raw=true)
 
 _Figure 6. After the installation, the output provides you with the user and password to set up OpenVPN._
 
 Once installed, one has to connect through the browser to the admin version. There, some configuration has to be applied:
 
-![](RackMultipart20240405-1-b4fxau_html_cbce032dba318d7c.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image010.png?raw=true)
 
 _Figure 7. Settings to be applied inside the admin window of OpenVPN to ensure connectivity._
 
@@ -73,75 +73,75 @@ To download the profile that is going to be used by the client in my host machin
 
 There is one nuisance in the configuration of this OpenVPN, and it is that **the Network Settings** had to be updated each time the IP of the instance changes. This meant having to import again and again the new user-locked profile to connect to the VPN.
 
-![](RackMultipart20240405-1-b4fxau_html_b73b714afa687bf0.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image011.png?raw=true)
 
 _Figure 8. Network settings. The hostname changed when the AWS session ended._
 
-![](RackMultipart20240405-1-b4fxau_html_287fa1152499104d.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image012.png?raw=true)
 
 _Figure 9. Screenshot of the OpenVPN Client for my host machine. Connection was successfully established. After this connection, I was able to connect to the EC2 Research instance and the Voila EC2 through SSH; otherwise, the connection could not be established._
 
-# Setting up the Research EC2 instance
+## Setting up the Research EC2 instance
 
 Because I created the instances from scratch using the settings provided in the instructions, once created I was unable to grant this instances access to the internet to update packages through yum or install packages. See [Troubleshooting](#Troubleshooting) section for details.
 
 Once solved, I could successfully connect to the instance through the private IP and port 8888, if and only if I was attached to the VPN:
 
-![](RackMultipart20240405-1-b4fxau_html_8c7d177962a044ce.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image013.png?raw=true)
 
 _Figure 10. Jupyter Notebook on the Research EC2 instance. Mind the connection was made through the private (and not the public IP) and the port is the default 8888._
 
-# Setting up the Production instance
+## Setting up the Production instance
 
 The installation of the Voila server is straightforward. The welcome screen is shown in the screenshot.
 
-![](RackMultipart20240405-1-b4fxau_html_d782df303e79e67c.jpg)
+![](https://github.com/samuleal/hol02/blob/main/images/image014.png?raw=true)
 
 _Figure 11. Nginx welcome screen after installation. Access is granted if one directly uses de IP._
 
 Connection this instance to the S3 bucket is much easier, as there is an internet gateway. After installation of the keys, it can be easily accessed.
 
-![](RackMultipart20240405-1-b4fxau_html_b706197f3b07f647.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image015.png?raw=true)
 
 _Figure 12. Command Line showing that the contents of the S3 bucket can be listed from the Production Subnet after configuring aws._
 
 Because this instance runs Amazon Linux and it does not have cron as default to synchronize the notebooks with the S3, I used 'systemd' as a workaround (see [Troubleshooting](#Troubleshooting)).
 
-# Syncing
+## Syncing
 
 Because cron jobs have been deprecated in Amazon Linux 2023, the syncing strategy has been explained in the [Troubleshooting](#Troubleshooting) section. Briefly, the recommended systemd approach has been implemented.
 
 To test whether syncing works, I am first going to create a sample notebook on the Jupyter EC2 instance through the Jupyter Notebook interface.
 
-![](RackMultipart20240405-1-b4fxau_html_8460b2103289374a.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image016.png?raw=true)
 
 _Figure 13. Creation of a file in the Jupyter environment on the Research instance._
 
 We can see that this file does not exist yet on the S3 bucket as seen from the AWS control panel.
 
-![](RackMultipart20240405-1-b4fxau_html_72f4632aea4ddea.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image017.png?raw=true)
 
 _Figure 14. The locally created file is not yet uploaded to the S3 bucket._
 
 When the set timer triggers the syncing command, then this file created 'locally' on the Research instance must appear in the bucket seen from the AWS Control Panel. We wait for a few minutes and we check that the file has been successfully uploaded.
 
-![](RackMultipart20240405-1-b4fxau_html_611273f419433b9b.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image018.png?raw=true)
 
 _Figure 15. In the AWS page we can see that the newly created notebook has been pushed to the bucket successfully._
 
 Now it is time to check whether the syncing works in the Voila server instance. We are going to use the same systemd approach as in the Research EC2 instance.
 
-![](RackMultipart20240405-1-b4fxau_html_6c57d3ef435e858d.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image019.png?raw=true)
 
 _Figure 16. We can see that at the beginning no 'Fireflies.ipynb' file exists in the instance. We check how much is left for syncing and wait. After the wait, we check again whether the file exists... and it does! It has been successfully pulled from S3._
 
-# Troubleshooting
+## Troubleshooting
 
-# Google Chrome incompatibility issues with Vocareum
+### Google Chrome incompatibility issues with Vocareum
 
 The first problem I faced was accessing the AWS Lab, because Google Chrome browser has compatibility issues. Being a Windows OS user, I turned to Microsoft Edge which worked seamlessly.
 
-# Installing applications on the Research EC2 instance
+### Installing applications on the Research EC2 instance
 
 Because this instance is 'isolated', meaning that it has no direct internet connection, I found it difficult to install the Jupyter notebook or even routine applications due to the lack of connectivity.
 
@@ -154,19 +154,19 @@ My workaround was to **temporarily** modify:
 
 Once I got Jupyter installed, I returned the settings to their original values.
 
-# Access to the S3 bucket from the Research EC2 instance
+### Access to the S3 bucket from the Research EC2 instance
 
 Similarly, because this instance is not connected to the internet, the instance can not reach the bucket. The way I solved this was by creating an **endpoint gateway** that allowed for connection from the EC2 Research instance to the S3 bucket.
 
-![](RackMultipart20240405-1-b4fxau_html_eb2a7592dd9fd08.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image020.png?raw=true)
 
 _Figure 17. Configuration of the endpoint gateway in AWS._
 
-![](RackMultipart20240405-1-b4fxau_html_da7caaa10ac1691f.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image021.png?raw=true)
 
 _Figure 18. After creating the endpoint gateway, the buckets are listed and can be reached from the EC2 in the private subnet._
 
-# Amazon Linux 2023 does not support cron
+### Amazon Linux 2023 does not support cron
 
 The cron package is not installed by default in this Linux distribution, so an alternative solution had to be considered for bucket synchronization. I have used the 'systemd' timers in a similar way to cron jobs. I followed some of the instructions on [this blog](https://hungrymonkey.github.io/systemd-s3-backups-v1/).
 
@@ -198,7 +198,7 @@ ExecStart=/usr/bin/aws s3 sync /home/ec2-user/notebooks s3://hol02-notebooks-sam
 
 Finally, I enabled and started the timer. The snapshot shows that the timer is enabled and waiting for the next trigger (hour).
 
-![](RackMultipart20240405-1-b4fxau_html_14dc1404dd0969ae.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image022.png?raw=true)
 
 _Figure 19. S3 syncing on the Research EC2 instance. Syncing was achieved configuring systemd._
 
@@ -224,19 +224,19 @@ I changed the timer setting to execute the command every five minutes for develo
 
 The order of the source and destination paths in the aws s3 sync command can indeed affect the behavior of the synchronization. The first path is the source path, indicating the local directory or S3 bucket/prefix from which files should be copied. The second path is the destination path, indicating the local directory or S3 bucket/prefix to which files should be copied. This way, in the Research Instance we are pushing the files, and in the Voila Instance we are pulling or retrieving the files. This is why to sync from the bucket to the Voila instance, the same steps were taken and only the _ExecStart_ line of the service file was modified by reversing the paths ordering.
 
-# The elastic IP changes when the AWS session is closed
+### The elastic IP changes when the AWS session is closed
 
 When the 4 hours are up and the session in AWS is closed, the IP changes and some configuration must be performed again on the VPN to allow for the connection.
 
-# OpenVPN access
+### OpenVPN access
 
 https:// instead of http:// has to be used to enter OpenVPN in the browser.
 
-# Installing cronie as an alternative to cron
+### Installing cronie as an alternative to cron
 
 Unfortunately, crontab is not available by default in Amazon Linux 2023 EC2 instances. I found [this](https://jainsaket-1994.medium.com/installing-crontab-on-amazon-linux-2023-ec2-98cf2708b171)blog post that provides a step-by-step workaround to successfully install crontab on AL 2023 through the alternative package 'cronie'.
 
-![](RackMultipart20240405-1-b4fxau_html_ed3167d8f45f500b.png)
+![](https://github.com/samuleal/hol02/blob/main/images/image023.png?raw=true)
 
 _Figure 20. Cronie package installation through yum._
 
