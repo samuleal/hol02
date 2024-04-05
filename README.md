@@ -1,7 +1,8 @@
 # HOL 02: Deploying A Hybrid Infrastructure For Researchers In AWS
 HandsOn Labs on Cloud Computing and Big Data for BioMed  
 Samuel Leal Rodríguez  
-High-Performance And Distributed Computing For Big Data 2023 - 2024  
+High-Performance And Distributed Computing For Big Data  
+2023 - 2024  
 
 ## Introduction
 
