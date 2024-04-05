@@ -36,15 +36,16 @@ _Figure 3. DMZ Subnet Routing configuration. The route to the internet gateway w
 
 I created the security groups at the same time when I created the EC2 instances. This caused me some trouble (see [Troubleshooting](#Troubleshooting)), mostly for the subnet which was disconnected from the internet (HOL02-Research).
 
-In the next table a summary of the security groups, the ports and the sources accepted as inbound traffic are displayed.
+A summary of the security groups the ports and the sources accepted as inbound traffic are displayed below:
 
-| **Instance**| **Summary of Security Group configuration**|
-| --- | --- |
-| **HOL02-VPN**| ![](RackMultipart20240405-1-b4fxau_html_babeeb5545906e2b.png) |
-| **HOL02-VoilaServer**| ![](RackMultipart20240405-1-b4fxau_html_9afa73172a43c75e.png) |
-| **HOL02-Jupyter**| ![](RackMultipart20240405-1-b4fxau_html_abc3fcf89557a0a5.png) |
+#### HOL02-VPN
+![](https://github.com/samuleal/hol02/blob/main/images/image005.png?raw=true)
 
-_Figure 4. Summary of security groups for each of the instances according to the configuration given by the instructor._
+#### HOL02-VoilaServer
+![](https://github.com/samuleal/hol02/blob/main/images/image006.png?raw=true)
+
+#### HOL02-Jupyter
+![](https://github.com/samuleal/hol02/blob/main/images/image007.png?raw=true)
 
 ## Creation of the S3 bucket
 
