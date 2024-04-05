@@ -97,7 +97,7 @@ The installation of the Voila server is straightforward. The welcome screen is s
 
 ![](https://github.com/samuleal/hol02/blob/main/images/image014.jpg?raw=true)
 
-_Figure 11. Nginx welcome screen after installation. Access is granted if one directly uses de IP._
+_Figure 11. Nginx welcome screen after installation. Access is granted if one directly uses the IP._
 
 Connection this instance to the S3 bucket is much easier, as there is an internet gateway. After installation of the keys, it can be easily accessed.
 
