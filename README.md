@@ -36,7 +36,7 @@ _Figure 3. DMZ Subnet Routing configuration. The route to the internet gateway w
 
 I created the security groups at the same time when I created the EC2 instances. This caused me some trouble (see [Troubleshooting](#Troubleshooting)), mostly for the subnet which was disconnected from the internet (HOL02-Research).
 
-A summary of the security groups the ports and the sources accepted as inbound traffic are displayed below:
+A summary of the security groups, the ports and the sources accepted as inbound traffic are displayed below:
 
 #### HOL02-VPN
 ![](https://github.com/samuleal/hol02/blob/main/images/image005.png?raw=true)
